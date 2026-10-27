@@ -128,3 +128,20 @@ def cargar_configuracion(ruta_archivo):
         "matriz": matriz,
         "campos": campos,
     }
+
+
+def obtener_rutas(carpeta_base):
+    """Todas las rutas del proyecto, armadas desde la carpeta de main.py.
+    Así el proyecto funciona en cualquier computador y en cualquier carpeta."""
+    return {
+        "parametros": os.path.join(carpeta_base, "config", "parametros.xlsx"),
+        "entrada": os.path.join(carpeta_base, "entrada"),
+        "salida": os.path.join(carpeta_base, "salida"),
+        "logs": os.path.join(carpeta_base, "logs"),
+    }
+
+
+def crear_carpetas(rutas):
+    """Crea salida/ y logs/ si no existen."""
+    for clave in ("salida", "logs"):
+        os.makedirs(rutas[clave], exist_ok=True)

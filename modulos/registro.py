@@ -20,6 +20,9 @@ FONDO_ENCABEZADO = PatternFill("solid", fgColor="BDD7EE")
 FONDO_ROJO = PatternFill("solid", fgColor="F8CBAD")
 FORMATO_HORA = "%Y-%m-%d %H:%M:%S"
 
+# Se usa solo si la configuración no se pudo leer y no se conoce el prefijo
+PREFIJO_RESPALDO = "log_ejecucion"
+
 
 def dar_formato_hoja(hoja):
     """Encabezado en negrita con color, fila 1 fija y columnas a la medida."""
@@ -29,7 +32,7 @@ def dar_formato_hoja(hoja):
     hoja.freeze_panes = "A2"
     for columna in hoja.columns:
         mas_largo = max(len(str(celda.value or "")) for celda in columna)
-        hoja.column_dimensions[columna[0].column_letter].width = min(mas_largo + 2, 80)
+        hoja.column_dimensions[columna[0].column_letter].width = min(int(mas_largo * 1.2) + 2, 80)
 
 
 class Registro:
@@ -46,7 +49,7 @@ class Registro:
         self.eventos.append([
             len(self.eventos) + 1,
             datetime.now().strftime(FORMATO_HORA),
-            nivel, modulo, funcion, str(registro), mensaje, detalle,
+                        nivel, modulo, funcion, registro, mensaje, detalle,
         ])
 
     def registrar_error(self, nivel, error, mensaje, registro=""):
