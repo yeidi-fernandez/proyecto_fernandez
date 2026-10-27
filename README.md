@@ -183,17 +183,19 @@ Log de la ejecución: ...\logs\log_ejecucion_20261026_213902.xlsx
 
 ## 10. Dificultades encontradas
 
-- Al crear la estructura en VS Code, hice `config`, `entrada` y `modulos` como archivos y no como carpetas. Después `modulos` me quedó dentro de `entrada`. Lo resolví fijándome en la flechita que tienen las carpetas y moviendo `modulos` al lugar correcto.
-- La primera vez que ejecuté `main.py` salió un `ImportError`. Era porque no había guardado un cambio en `registro.py`. Aprendí a revisar que las pestañas no tengan el punto de "sin guardar".
-- VS Code no abre los archivos de Excel. Los abrí con el comando `start` desde la terminal.
-- Con los catálogos del enunciado no se podía probar el rechazo por combinación que no está en la matriz. Toda combinación que faltaba ya fallaba antes por áreas distintas. Lo resolví agregando el cargo `SOP-01` en Cargos, sin fila en Matriz_Roles.
-- Tuve que decidir el orden entre la validación de área y la de matriz. Puse primero el área, porque el Anexo A dice que la novedad de DES-01 en un centro administrativo debe activar la validación cruzada de área.
-- En el primer log, la columna Nivel se cortaba y el consecutivo quedaba guardado como texto. Ajusté el ancho de las columnas y quité la conversión a texto.
+- Al principio no sabía cómo hacer que una novedad con error no detuviera todo el programa. Lo resolví separando los errores en dos grupos: los graves y los de una sola novedad.
+- Necesitaba que el log se guardara aunque el programa fallara, incluso si no se podía leer la configuración. Lo resolví guardándolo en un bloque que siempre se ejecuta al final (`finally`).
+- Con las personas que se llaman igual, los correos se repetían. Lo resolví agregando un número al final del nombre: juan.perez2, juan.perez3.
+- Algunas expresiones regulares aceptaban datos de más. Por ejemplo, un documento muy largo pasaba como válido. Lo resolví exigiendo que todo el texto cumpla el patrón (`fullmatch`).
+- Una fecha como 31/13/2026 tiene la forma correcta, pero el mes 13 no existe. Tuve que revisar primero la forma y después si la fecha es real.
+- Sacar fechas de un texto libre fue difícil, porque pueden venir en dos formatos y varias en el mismo texto.
+- Con los datos del enunciado no podía probar el rechazo por la matriz de roles. Agregué un cargo de prueba (`SOP-01`) para lograrlo.
+- En VS Code creé carpetas como si fueran archivos, y una carpeta me quedó dentro de otra. Aprendí a fijarme en la flechita de las carpetas.
+- Me salió un error porque no había guardado un archivo. Aprendí a revisar el punto que aparece en la pestaña cuando falta guardar.
 
 ## 11. Qué mejoraría
 
-- Haría pruebas automáticas con `unittest` para cada validación, en vez de probar a mano.
-- Si el Excel de salida está abierto, guardaría una copia con la hora en el nombre en vez de detener el programa.
-- Pasaría a la configuración las reglas de los tipos de documento, para poder agregar un tipo nuevo sin tocar el código.
-- Agruparía el motivo de rechazo más frecuente por tipo de motivo, porque algunos mensajes traen números que los hacen distintos.
-- Empezaría a subir los cambios a GitHub desde el primer día, para que el historial muestre mejor el avance.
+- Haría pruebas automáticas para no tener que probar todo a mano.
+- Si el Excel de salida está abierto, guardaría una copia con otro nombre en vez de detener el programa.
+- Pasaría más reglas al Excel de configuración, como los tipos de documento.
+- Empezaría a subir los cambios a GitHub desde el primer día.
